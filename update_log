@@ -1,0 +1,7 @@
+2018/02/01: 0458 GMT +9
+Recall added the following item:
+APItoXML.py: This file is running fine, able to generated a XML file based on the api given.
+
+XMLtoCSV.py: This file is require enhancement as a part of it is kinda hardcoded
+
+CSVtoExcel.py: This file is running fine, able to generated any CSV file to xlsx file
