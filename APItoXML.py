@@ -7,8 +7,8 @@ from xml.dom.minidom import parseString
 #this function will obtain the api_url and get the data(in JSON file)
 #JSON in string will be returned.
 def getapidata(api_url):
-    url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=15min&outputsize=full&apikey=demo" #sample API link
-    #url = api_url #comment out for temporary.
+    #url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=15min&outputsize=full&apikey=demo" #sample API link
+    url = "https://www.alphavantage.co/query?function=TIME_SERIES_" + interval + "&symbol=" + symbol + "&interval=15min&outputsize=full&apikey=J3Q2DC5XWYELA6G5"
     page = urlopen(url)
     data = page.read() 
     data = bytes.decode(data)
