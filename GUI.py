@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 import APItoXML
+import XMLtoCSV
+import CSVtoExcel
 # Written by
 # Teoh Jie Sheng
 # A GUI for TSW assignemnt
@@ -11,9 +13,8 @@ class GUI(tk.Frame):
         tk.Frame.__init__(self, master)
         self.size()
         self.grid()
-        self.grid_rowconfigure(0, minsize=200)
-        self.grid_rowconfigure(1, minsize=200)
-        self.columnconfigure(1, minsize=300)
+        # self.grid_rowconfigure(0, minsize=200)
+        # self.grid_rowconfigure(1, minsize=200)
         self.createFirstRow()
         self.createSecondRow()
         self.createButtonRow()
@@ -38,8 +39,10 @@ class GUI(tk.Frame):
         if messagebox.askyesno("Confirmation", "Are you sure about your decision?", icon='warning') == True:
             a = [self.share_select, self.option_select]
             messagebox.showinfo("Information", "Downloading the file, please wait...")
-            APItoXML.start(a)
+            dates = APItoXML.start(a)
             messagebox.showinfo("Information", "File download done.")
+            XMLtoCSV.start(dates, self.share_select)
+            CSVtoExcel.start()
         else:
             print("Disagree")
 
