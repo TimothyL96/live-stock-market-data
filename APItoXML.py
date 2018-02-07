@@ -1,11 +1,6 @@
 from urllib.request import urlopen
-#from yahoo_quote_download import yqd
-import xmltodict
 import json
 from src.json2xml import Json2xml
-import dicttoxml
-from xml.dom.minidom import parseString
-
 #this function will obtain the api_url and get the data(in JSON file)
 #JSON in string will be returned.
 def getapidata(options):
@@ -30,9 +25,6 @@ def json2xml(json_data):
     xml_output = data_object.json2xml()
     return xml_output
 
-#This functino will write the data into xml file
-#input parameter is a string
-#output is a xml file, which named example.xml for this case
 def writexmltofile(xml_data):
     filename = "example.xml"
     fileobj = open(filename, "w")
@@ -40,7 +32,30 @@ def writexmltofile(xml_data):
     fileobj.write(xml_data)
     fileobj.close()
 
+#This function is to return the list of date of the data selected.
+def getDates(content, options):
+    interval = options[1]
+    date_key_phrase = getKeyPhrases(interval)
+    list_date = list(content[date_key_phrase].keys())
+    list_date = sorted(list_date)
+    print(list_date)
+    return list_date
+
+
+#This function is to decide key phrases
+def getKeyPhrases(interval):
+    if interval == "WEEKLY":
+        return "Weekly Time Series"
+    elif interval == "MONTHLY":
+        return "Monthly Time Series"
+    elif interval == "DAILY":
+        return "Time Series (Daily)"
+
+
+
+#Enhancement for this function is needed
 def start(options):
     data = getapidata(options)
     test = json2xml(data)
     writexmltofile(test)
+    return getDates(data, options)
