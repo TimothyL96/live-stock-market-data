@@ -1,47 +1,25 @@
 import xml.etree.ElementTree as ET
 import csv
 
-tree = ET.parse("sample.xml")
-root = tree.getroot()
-
-# open a file for writing
-
-Resident_data = open('ResidentData.csv', 'w')
-
-# create the csv writer object
-
-csvwriter = csv.writer(Resident_data)
-resident_head = []
-count = 0
-for member in root.findall('Resident'):
-	resident = []
-	address_list = []
-	if count == 0:
-		name = member.find('Name').tag
-		resident_head.append(name)
-		PhoneNumber = member.find('PhoneNumber').tag
-		resident_head.append(PhoneNumber)
-		EmailAddress = member.find('EmailAddress').tag
-		resident_head.append(EmailAddress)
-		Address = member[3].tag
-		resident_head.append(Address)
-		csvwriter.writerow(resident_head)
-		count = count + 1
-
-	name = member.find('Name').text
-	resident.append(name)
-	PhoneNumber = member.find('PhoneNumber').text
-	resident.append(PhoneNumber)
-	EmailAddress = member.find('EmailAddress').text
-	resident.append(EmailAddress)
-	Address = member[3][0].text
-	address_list.append(Address)
-	City = member[3][1].text
-	address_list.append(City)
-	StateCode = member[3][2].text
-	address_list.append(StateCode)
-	PostalCode = member[3][3].text
-	address_list.append(PostalCode)
-	resident.append(address_list)
-	csvwriter.writerow(resident)
-Resident_data.close()
+def start(dates, share_name):
+    tree = ET.parse("example.xml")
+    root = tree.getroot()
+    # open a file for writing
+    stock_data = open('example.csv', 'w')
+    # create the csv writer object
+    csvwriter = csv.writer(stock_data)
+    #The first row of CSV file.
+    csvwriter.writerow(share_name)
+    resident_head = ["Date", "Open value", "Highest value", "Lowest value", "Close value", "Total Volume"]
+    csvwriter.writerow(resident_head)
+    datasets = len(root[1].getchildren())
+    for set in range(0, datasets):
+        datalist = []
+        datalist.append(dates[set])
+        datalist.append(root[1][set][0].text) #Open Value
+        datalist.append(root[1][set][1].text) #Highest Value
+        datalist.append(root[1][set][2].text) #Lowest Value
+        datalist.append(root[1][set][3].text) #Close Value
+        datalist.append(root[1][set][4].text) #Total vloume
+        csvwriter.writerow(datalist)
+    stock_data.close()
