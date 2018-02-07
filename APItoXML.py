@@ -7,14 +7,19 @@ from xml.dom.minidom import parseString
 #this function will obtain the api_url and get the data(in JSON file)
 #JSON in string will be returned.
 def getapidata(api_url):
-    #url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=15min&outputsize=full&apikey=demo" #sample API link
+    #API token = "J3Q2DC5XWYELA6G5"
+    #url = api_url
+    symbol = options[0]
+    interval = options[1]
     url = "https://www.alphavantage.co/query?function=TIME_SERIES_" + interval + "&symbol=" + symbol + "&interval=15min&outputsize=full&apikey=J3Q2DC5XWYELA6G5"
     page = urlopen(url)
-    data = page.read() 
+    data = page.read()  #API problem, data come in bytes instead of String
     data = bytes.decode(data)
     content = json.loads(data)
     return content
-
+    # print(content)
+    
+   
 #This function will convert the JSON data into XML file
 #Returned data type is string
 #The data is XML in string.
